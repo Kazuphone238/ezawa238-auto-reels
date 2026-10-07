@@ -11,8 +11,8 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-lat
-        timeout-minutes: 10
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Install FFmpeg
         run: |
