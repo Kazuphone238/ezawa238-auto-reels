@@ -1,0 +1,39 @@
+name: EZAWA238 Generate Reel
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - generate_reel.py
+      - .github/workflows/generate.yml
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Generate music and video
+        run: python3 generate_reel.py
+
+      - name: Save generated files
+        uses: actions/upload-artifact@v4
+        with:
+          name: ezawa238-reel
+          path: |
+            output/ezawa238_reel.mp4
+            output/music.wav
+          if-no-files-found: error
+          retention-days: 3
