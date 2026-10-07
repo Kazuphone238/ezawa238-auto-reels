@@ -1,0 +1,17 @@
+# Local credentials
+.env
+.env.*
+!.env.example
+credentials.json
+token.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Generated files
+output/
+temp/
+*.log
