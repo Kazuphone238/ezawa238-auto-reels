@@ -1,0 +1,21 @@
+name: EZAWA238 Test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/test.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check environment
+        run: |
+          echo "EZAWA238 automation test OK"
+          python3 --version
+          ffmpeg -version
