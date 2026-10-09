@@ -16,7 +16,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def check(env, open_request=None):
+def check(env, open_request=None, publishing_limit=False):
     names = ("IG_ACCESS_TOKEN", "IG_USER_ID", "IG_API_VERSION", "IG_LOGIN_METHOD")
     missing = [name for name in names if not env.get(name, "").strip()]
     if missing:
@@ -31,8 +31,9 @@ def check(env, open_request=None):
     hosts = {"instagram": "graph.instagram.com", "facebook": "graph.facebook.com"}
     if method not in hosts:
         raise CheckError("IG_LOGIN_METHODはinstagramまたはfacebookにしてください。")
+    endpoint = "/content_publishing_limit?fields=quota_usage" if publishing_limit else "?fields=id,username"
     request = urllib.request.Request(
-        f"https://{hosts[method]}/{version}/{user_id}?fields=id,username",
+        f"https://{hosts[method]}/{version}/{user_id}{endpoint}",
         headers={"Authorization": "Bearer " + env["IG_ACCESS_TOKEN"].strip()},
         method="GET",
     )
@@ -61,6 +62,14 @@ def check(env, open_request=None):
         raise CheckError("Meta APIから正常なJSON応答を取得できませんでした。") from None
     if not isinstance(payload, dict):
         raise CheckError("Meta APIの応答形式を確認できませんでした。")
+    if publishing_limit:
+        data = payload.get("data")
+        if not isinstance(data, list) or not data or not isinstance(data[0], dict):
+            raise CheckError("投稿枠の応答形式を確認できませんでした。")
+        usage = data[0].get("quota_usage")
+        if type(usage) is not int or usage < 0:
+            raise CheckError("投稿枠の利用数を確認できませんでした。")
+        return usage
     expected = env.get("IG_EXPECTED_USERNAME", "ezawa238").strip().lstrip("@").lower()
     username = payload.get("username")
     if not expected or not isinstance(username, str) or username.lower() != expected:
@@ -71,6 +80,8 @@ def check(env, open_request=None):
 def main():
     try:
         username = check(os.environ)
+        print(f"接続確認成功: @{username}")
+        usage = check(os.environ, publishing_limit=True)
     except CheckError as error:
         print(str(error))
         return 1
@@ -78,8 +89,8 @@ def main():
         # Never emit a traceback containing request details.
         print("診断処理で予期しないエラーが発生しました。設定と実装を確認してください。")
         return 1
-    print(f"接続確認成功: @{username}")
-    print("確認範囲: 対象アカウント情報の読み取り。投稿権限・動画投稿・定期投稿は未確認です。")
+    print(f"投稿枠の読み取り成功: 利用数 {usage}")
+    print("確認範囲: 対象アカウント情報と投稿枠の読み取り。動画投稿・定期投稿は未確認です。")
     return 0
 
 
