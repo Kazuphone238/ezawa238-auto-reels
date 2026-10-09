@@ -1,0 +1,43 @@
+name: EZAWA238 Instagram Connection Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - check_instagram_connection.py
+      - tests/test_instagram_connection.py
+      - .github/workflows/instagram-check.yml
+  workflow_dispatch:
+    inputs:
+      login_method:
+        description: Metaで設定したログイン方式
+        type: choice
+        required: true
+        options:
+          - instagram
+          - facebook
+      api_version:
+        description: Metaの画面で確認したAPIバージョン（vXX.0形式）
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run offline diagnostic tests
+        run: python3 -m unittest discover -s tests -p 'test_instagram_connection.py' -v
+      - name: Check Instagram connection
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_LOGIN_METHOD: ${{ inputs.login_method || vars.IG_LOGIN_METHOD || secrets.IG_LOGIN_METHOD }}
+          IG_API_VERSION: ${{ inputs.api_version || vars.IG_API_VERSION || secrets.IG_API_VERSION }}
+          IG_EXPECTED_USERNAME: ezawa238
+        run: python3 check_instagram_connection.py
