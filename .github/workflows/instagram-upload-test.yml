@@ -1,0 +1,69 @@
+name: EZAWA238 Instagram Upload Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 動画を公開GitHubリリースとInstagram処理用に送信する実行番号
+        type: string
+        required: true
+        default: '37993973700'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: instagram-upload-test
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      SOURCE_RUN_ID: ${{ inputs.source_run_id || '37993973700' }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Run offline upload tests
+        run: python3 -m unittest discover -s tests -p 'test_prepare_instagram_reel.py' -v
+      - name: Download reviewed video
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN_ID" =~ ^[0-9]+$ ]]
+          gh api "repos/$GH_REPO/actions/runs/$SOURCE_RUN_ID" > source-run.json
+          python3 -c 'import json; r=json.load(open("source-run.json")); assert r["conclusion"] == "success" and r["path"] == ".github/workflows/generate.yml" and r["head_branch"] == "main", "Successful main-branch video generation is required"'
+          mkdir -p reviewed
+          gh run download "$SOURCE_RUN_ID" --name ezawa238-reel --dir reviewed
+          test -s reviewed/ezawa238_reel.mp4
+      - name: Host reviewed video
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="reel-preview-$SOURCE_RUN_ID"
+          source_sha="$(python3 -c 'import json; print(json.load(open("source-run.json"))["head_sha"])')"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            mkdir -p hosted
+            gh release download "$tag" --pattern ezawa238_reel.mp4 --dir hosted
+            cmp reviewed/ezawa238_reel.mp4 hosted/ezawa238_reel.mp4
+          else
+            gh release create "$tag" reviewed/ezawa238_reel.mp4 --target "$source_sha" --title "EZAWA238 reviewed Reel $SOURCE_RUN_ID" --notes "Video prepared for Instagram API testing. This release does not publish it on Instagram." --prerelease
+          fi
+      - name: Prepare Instagram video without publishing
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_LOGIN_METHOD: ${{ vars.IG_LOGIN_METHOD || secrets.IG_LOGIN_METHOD }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION || secrets.IG_API_VERSION }}
+          IG_EXPECTED_USERNAME: ezawa238
+        run: python3 prepare_instagram_reel.py
+      - name: Save preparation result
+        uses: actions/upload-artifact@v6
+        with:
+          name: instagram-upload-result
+          path: upload-result/
+          retention-days: 2
