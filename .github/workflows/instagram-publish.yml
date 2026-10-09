@@ -1,0 +1,62 @@
+name: EZAWA238 Publish Reviewed Reel
+
+on:
+  workflow_dispatch:
+    inputs:
+      prepare_run_id:
+        description: アップロードテストの実行番号
+        required: true
+        type: string
+        default: '37994981431'
+      confirm_publish:
+        description: 確認した動画と投稿文を@ezawa238に公開する
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: instagram-reviewed-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PREPARE_RUN_ID: ${{ inputs.prepare_run_id }}
+      CONFIRM_PUBLISH: ${{ inputs.confirm_publish }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Run offline publishing tests
+        run: python3 -m unittest discover -s tests -p 'test_publish_instagram_reel.py' -v
+      - name: Download reviewed preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$CONFIRM_PUBLISH" = "true"
+          [[ "$PREPARE_RUN_ID" =~ ^[0-9]+$ ]]
+          gh api "repos/$GH_REPO/actions/runs/$PREPARE_RUN_ID" > preparation-run.json
+          python3 -c 'import json; r=json.load(open("preparation-run.json")); assert r["conclusion"] == "success" and r["path"] == ".github/workflows/instagram-upload-test.yml" and r["head_branch"] == "main", "Successful upload test is required"'
+          mkdir -p prepared
+          gh run download "$PREPARE_RUN_ID" --name instagram-upload-result --dir prepared
+      - name: Publish reviewed Instagram Reel
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_LOGIN_METHOD: ${{ vars.IG_LOGIN_METHOD || secrets.IG_LOGIN_METHOD }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION || secrets.IG_API_VERSION }}
+          IG_EXPECTED_USERNAME: ezawa238
+        run: python3 publish_instagram_reel.py
+      - name: Save publication result
+        uses: actions/upload-artifact@v6
+        with:
+          name: instagram-publish-result
+          path: publish-result/
+          retention-days: 30
