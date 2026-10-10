@@ -1,33 +1,28 @@
 name: EZAWA238 Generate Reel
-
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - generate_reel.py
+      - generate_remix.py
+      - assets/approved_duet.mp4
       - .github/workflows/generate.yml
-
 permissions:
   contents: read
-
 jobs:
   generate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
-
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install FFmpeg
+        uses: actions/checkout@v5
+      - name: Install music tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg
-
-      - name: Generate music and video
-        run: python3 generate_reel.py
-
+          sudo apt-get install -y ffmpeg python3-numpy
+      - name: New music on approved duet
+        run: /usr/bin/python3 generate_reel.py
       - name: Save generated files
         uses: actions/upload-artifact@v4
         with:
@@ -35,5 +30,6 @@ jobs:
           path: |
             output/ezawa238_reel.mp4
             output/music.wav
+            output/music_info.json
           if-no-files-found: error
           retention-days: 3
