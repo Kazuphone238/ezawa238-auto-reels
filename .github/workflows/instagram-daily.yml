@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/instagram-daily.yml
       - daily_instagram.py
+      - daily_story.py
 permissions:
   contents: write
 concurrency:
@@ -29,3 +30,6 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: Publish next approved Reel or check connection on push
         run: python3 daily_instagram.py
+
+      - name: Share approved video to Stories or check account eligibility
+        run: python3 daily_story.py
