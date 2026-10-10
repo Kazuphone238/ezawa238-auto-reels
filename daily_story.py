@@ -17,7 +17,7 @@ def main():
     kind=account_type(env)
     print('ストーリー対応確認: アカウント種別 '+str(kind))
     if kind!='BUSINESS':
-        raise CheckError('ストーリー自動投稿にはビジネスアカウントが必要です。リール設定は維持します。')
+        print('ストーリー自動投稿にはビジネスアカウントが必要です。ストーリーは見送り、リール設定は維持します。');return
     if env.get('GITHUB_EVENT_NAME')!='schedule':
         print('ストーリー接続確認のみ。公開は実行していません。');return
     state,sha=read_state()
