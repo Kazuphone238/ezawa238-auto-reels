@@ -1,9 +1,11 @@
 {
   "items": {
     "light-beyond-night-20261011": {
-      "status": "publishing",
+      "status": "published",
       "date": "2026-10-11",
-      "container_id": "18111937976031052"
+      "container_id": "18111937976031052",
+      "media_id": "18104151416363349"
     }
-  }
+  },
+  "last_post_date": "2026-10-11"
 }
