@@ -18,7 +18,8 @@ def main():
     print('ストーリー対応確認: アカウント種別 '+str(kind))
     if kind!='BUSINESS':
         print('ストーリー自動投稿にはビジネスアカウントが必要です。ストーリーは見送り、リール設定は維持します。');return
-    if env.get('GITHUB_EVENT_NAME')!='schedule':
+    requested_today=(env.get('GITHUB_EVENT_NAME')=='push' and env.get('EZAWA238_STORY_REQUEST_DATE')==datetime.now(ZoneInfo('Asia/Tokyo')).date().isoformat())
+    if env.get('GITHUB_EVENT_NAME')!='schedule' and not requested_today:
         print('ストーリー接続確認のみ。公開は実行していません。');return
     state,sha=read_state()
     today=datetime.now(ZoneInfo('Asia/Tokyo')).date().isoformat()
