@@ -1,0 +1,27 @@
+name: EZAWA238 Approved Story 2026-10-11
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/story-request-20261011.yml]
+permissions:
+  contents: write
+concurrency:
+  group: instagram-reviewed-publish
+  cancel-in-progress: false
+jobs:
+  story:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+      IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      IG_LOGIN_METHOD: ${{ vars.IG_LOGIN_METHOD || secrets.IG_LOGIN_METHOD }}
+      IG_API_VERSION: ${{ vars.IG_API_VERSION || secrets.IG_API_VERSION }}
+      IG_EXPECTED_USERNAME: ezawa238
+      EZAWA238_STORY_REQUEST_DATE: '2026-10-11'
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 -m unittest discover -s tests -v
+      - name: Publish today's approved Story only
+        run: python3 daily_story.py
