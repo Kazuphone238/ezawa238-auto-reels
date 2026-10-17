@@ -12,10 +12,11 @@
       }
     },
     "reel-start-20261017": {
-      "status": "publishing",
+      "status": "published",
       "date": "2026-10-17",
-      "container_id": "18113315750031052"
+      "container_id": "18113315750031052",
+      "media_id": "18101750570270358"
     }
   },
-  "last_post_date": "2026-10-11"
+  "last_post_date": "2026-10-17"
 }
