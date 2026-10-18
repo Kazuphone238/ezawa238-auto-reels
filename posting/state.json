@@ -26,7 +26,10 @@
       "status": "published",
       "date": "2026-10-18",
       "container_id": "18113562422031052",
-      "media_id": "18100785380533176"
+      "media_id": "18100785380533176",
+      "story": {
+        "status": "claimed"
+      }
     }
   },
   "last_post_date": "2026-10-18"
