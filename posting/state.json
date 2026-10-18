@@ -28,7 +28,8 @@
       "container_id": "18113562422031052",
       "media_id": "18100785380533176",
       "story": {
-        "status": "claimed"
+        "status": "processing",
+        "container_id": "18113562773031052"
       }
     }
   },
