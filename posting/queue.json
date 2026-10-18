@@ -22,5 +22,13 @@
     "source_library_file_id": "libfile_a18e055787c081919bc351485806cf01",
     "audio_start_seconds": 0,
     "duration_seconds": 15
+  },
+  {
+    "id": "new-track-20261019",
+    "path": "posting/videos/new-track-20261019.mp4",
+    "sha256": "20034a689e7924cdda6459756a9f8470b037f2c53a501336a35d011e45351c7d",
+    "caption": "EZAWA238 | New Track 🔥\n#EZAWA238 #Music #Reels",
+    "source_library_file_id": "libfile_ce7e46611cf88191b2904748108d4e2e",
+    "duration_seconds": 30.033333
   }
 ]
