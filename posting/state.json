@@ -34,10 +34,11 @@
       }
     },
     "new-track-20261019": {
-      "status": "publishing",
+      "status": "published",
       "date": "2026-10-19",
-      "container_id": "18113810555031052"
+      "container_id": "18113810555031052",
+      "media_id": "18009820076776024"
     }
   },
-  "last_post_date": "2026-10-18"
+  "last_post_date": "2026-10-19"
 }
