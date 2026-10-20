@@ -57,6 +57,8 @@ def main():
         print('未投稿の承認済み動画がないため、本日の投稿を見送ります。');return
     if requested and item['id']!=env['EZAWA238_PUBLISH_REQUEST_ID']:
         raise CheckError('指定された動画と次の投稿が一致しないため停止します。')
+    if item.get('visual_template')!='approved_duet' or item.get('visual_verified') is not True:
+        raise CheckError('石像2体の完成動画として確認されていないため投稿を停止します。')
     path=Path(item['path'])
     if hashlib.sha256(path.read_bytes()).hexdigest()!=item['sha256']:
         raise CheckError('承認済み動画の内容が変わったため停止しました。')
@@ -90,3 +92,4 @@ if __name__=='__main__':
     try:main()
     except CheckError as e:print(str(e));raise SystemExit(1)
     except Exception:print('投稿を確認できませんでした。重複防止のため停止しました。');raise SystemExit(1)
+
