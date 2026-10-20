@@ -35,7 +35,9 @@ def save_state(state,sha):
 def main():
     env=os.environ
     check(env)
-    if env.get('GITHUB_EVENT_NAME')!='schedule':
+    request_date=datetime.now(ZoneInfo('Asia/Tokyo')).date().isoformat()
+    requested=(env.get('GITHUB_EVENT_NAME')=='push' and env.get('EZAWA238_PUBLISH_REQUEST_DATE')==request_date and bool(env.get('EZAWA238_PUBLISH_REQUEST_ID')))
+    if env.get('GITHUB_EVENT_NAME')!='schedule' and not requested:
         print('Instagram接続確認成功。公開は実行していません。')
         return
     now=datetime.now(ZoneInfo('Asia/Tokyo'))
@@ -53,6 +55,8 @@ def main():
     item=next((i for i in queue if i['id'] not in records),None)
     if item is None:
         print('未投稿の承認済み動画がないため、本日の投稿を見送ります。');return
+    if requested and item['id']!=env['EZAWA238_PUBLISH_REQUEST_ID']:
+        raise CheckError('指定された動画と次の投稿が一致しないため停止します。')
     path=Path(item['path'])
     if hashlib.sha256(path.read_bytes()).hexdigest()!=item['sha256']:
         raise CheckError('承認済み動画の内容が変わったため停止しました。')

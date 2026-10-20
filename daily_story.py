@@ -19,7 +19,8 @@ def main():
     if kind!='BUSINESS':
         print('ストーリー自動投稿にはビジネスアカウントが必要です。ストーリーは見送り、リール設定は維持します。');return
     requested_today=(env.get('GITHUB_EVENT_NAME')=='push' and env.get('EZAWA238_STORY_REQUEST_DATE')==datetime.now(ZoneInfo('Asia/Tokyo')).date().isoformat())
-    if env.get('GITHUB_EVENT_NAME')!='schedule' and not requested_today:
+    requested_reel=(env.get('GITHUB_EVENT_NAME')=='push' and env.get('EZAWA238_PUBLISH_REQUEST_DATE')==datetime.now(ZoneInfo('Asia/Tokyo')).date().isoformat() and bool(env.get('EZAWA238_PUBLISH_REQUEST_ID')))
+    if env.get('GITHUB_EVENT_NAME')!='schedule' and not requested_today and not requested_reel:
         print('ストーリー接続確認のみ。公開は実行していません。');return
     state,sha=read_state()
     today=datetime.now(ZoneInfo('Asia/Tokyo')).date().isoformat()
@@ -27,6 +28,8 @@ def main():
     if not eligible:
         print('本日投稿したリールがないためストーリーを見送ります。');return
     key,record=eligible[0]
+    if requested_reel and key!=env['EZAWA238_PUBLISH_REQUEST_ID']:
+        raise CheckError('指定されたリールと一致しないため停止します。')
     if record.get('story'):
         if record['story']['status']=='published':print('本日のストーリーは投稿済みです。');return
         raise CheckError('以前のストーリー結果が未確定です。重複防止のため自動再送しません。')

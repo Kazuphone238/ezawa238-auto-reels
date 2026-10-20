@@ -30,5 +30,16 @@
     "caption": "EZAWA238 | New Track 🔥\n#EZAWA238 #Music #Reels",
     "source_library_file_id": "libfile_ce7e46611cf88191b2904748108d4e2e",
     "duration_seconds": 30.033333
+  },
+  {
+    "id": "statue-duet-20261020",
+    "path": "posting/videos/statue-duet-20261020.mp4",
+    "sha256": "b2796bd7d5aa5aca184619db3a9d709380ec89bb6f68006a843fa12c4865dca9",
+    "caption": "EZAWA238 | New Track\n#EZAWA238 #Dance #Suno",
+    "source_library_file_id": "libfile_8a4155c599e48191af008e6b6092be17",
+    "audio_start_seconds": 0,
+    "duration_seconds": 15,
+    "visual_template": "approved_duet",
+    "visual_verified": true
   }
 ]
