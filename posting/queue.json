@@ -41,5 +41,15 @@
     "duration_seconds": 15,
     "visual_template": "approved_duet",
     "visual_verified": true
+  },
+  {
+    "id": "statue-duet-20261021",
+    "path": "posting/videos/statue-duet-20261021.mp4",
+    "sha256": "a7d071b3f2d3b7c3e2b534d951795765fa4c8a258ee8988de7348a61dcfa8fc4",
+    "caption": "EZAWA238 | New Track\n#EZAWA238 #Dance #Suno",
+    "source_library_file_id": "libfile_41c22faeb57081919916662afe6171ec",
+    "duration_seconds": 30.1,
+    "visual_template": "approved_duet",
+    "visual_verified": true
   }
 ]
