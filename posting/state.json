@@ -56,8 +56,9 @@
       }
     },
     "statue-duet-20261021": {
-      "status": "claimed",
-      "date": "2026-10-21"
+      "status": "processing",
+      "date": "2026-10-21",
+      "container_id": "18114318179031052"
     }
   },
   "last_post_date": "2026-10-20"
