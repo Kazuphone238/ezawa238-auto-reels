@@ -67,10 +67,11 @@
       }
     },
     "statue-duet-20261022": {
-      "status": "publishing",
+      "status": "published",
       "date": "2026-10-22",
-      "container_id": "18114523589031052"
+      "container_id": "18114523589031052",
+      "media_id": "17977215309146348"
     }
   },
-  "last_post_date": "2026-10-21"
+  "last_post_date": "2026-10-22"
 }
