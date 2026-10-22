@@ -10,6 +10,7 @@ import time
 from zoneinfo import ZoneInfo
 from check_instagram_connection import check, CheckError
 from prepare_instagram_reel import api
+from track_bpm import validate_bpm
 
 STATE = 'posting/state.json'
 REPO = 'Kazuphone238/ezawa238-auto-reels'
@@ -62,6 +63,7 @@ def main():
     path=Path(item['path'])
     if hashlib.sha256(path.read_bytes()).hexdigest()!=item['sha256']:
         raise CheckError('承認済み動画の内容が変わったため停止しました。')
+    validate_bpm(item)
     # Claim is durable before creating or publishing a container. Never auto-retry an unknown POST.
     record={'status':'claimed','date':today}
     records[item['id']]=record

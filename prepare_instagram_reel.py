@@ -10,7 +10,7 @@ import urllib.parse
 import urllib.request
 from check_instagram_connection import CheckError, NoRedirect, check
 
-CAPTION = "EZAWA238 | Original music\n128 BPM / 15 seconds\n#EZAWA238 #OriginalMusic #EDM #Trance"
+CAPTION = "EZAWA238 | Original music\n#EZAWA238 #OriginalMusic #EDM #Trance"
 REPO = "Kazuphone238/ezawa238-auto-reels"
 
 def api(env, path, data=None, opener=None):
