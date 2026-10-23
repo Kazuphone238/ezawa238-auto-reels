@@ -83,8 +83,9 @@
       "container_id": "18114740549031052",
       "media_id": "18112627637065917",
       "story": {
-        "status": "publishing",
-        "container_id": "18114740762031052"
+        "status": "published",
+        "container_id": "18114740762031052",
+        "media_id": "18010845777002453"
       }
     }
   },
