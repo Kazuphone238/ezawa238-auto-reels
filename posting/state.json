@@ -78,8 +78,9 @@
       }
     },
     "dj-yokai-20261023": {
-      "status": "claimed",
-      "date": "2026-10-23"
+      "status": "processing",
+      "date": "2026-10-23",
+      "container_id": "18114740549031052"
     }
   },
   "last_post_date": "2026-10-22"
