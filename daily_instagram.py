@@ -4,6 +4,7 @@ from datetime import datetime
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import time
@@ -33,6 +34,20 @@ def save_state(state,sha):
     r=gh(['--method','PUT',f'repos/{REPO}/contents/{STATE}','--input',str(p)])
     return r['content']['sha']
 
+def validate_content(item):
+    if item.get('visual_verified') is not True:
+        raise CheckError('完成動画の映像確認がないため停止します。')
+    if item.get('visual_template') != 'approved_dj_yokai':
+        raise CheckError('今後の投稿は指定されたDJ妖怪動画のみ使用します。')
+    approval = item.get('custom_approval', {})
+    if (item.get('visual_template') != 'approved_dj_yokai'
+            or not approval.get('reason', '').strip()
+            or not item.get('sha256')
+            or approval.get('sha256') != item['sha256']
+            or approval.get('no_bpm_text_verified') is not True
+            or re.search(r'BPM', item.get('caption', ''), re.I)):
+        raise CheckError('今回の別映像への明示指定または完成動画の確認がないため停止します。')
+
 def main():
     env=os.environ
     check(env)
@@ -58,12 +73,12 @@ def main():
         print('未投稿の承認済み動画がないため、本日の投稿を見送ります。');return
     if requested and item['id']!=env['EZAWA238_PUBLISH_REQUEST_ID']:
         raise CheckError('指定された動画と次の投稿が一致しないため停止します。')
-    if item.get('visual_template')!='approved_duet' or item.get('visual_verified') is not True:
-        raise CheckError('石像2体の完成動画として確認されていないため投稿を停止します。')
+    if item.get('scheduled_date', today) > today:
+        print('予約日より前のため投稿しません。');return
+    validate_content(item)
     path=Path(item['path'])
     if hashlib.sha256(path.read_bytes()).hexdigest()!=item['sha256']:
         raise CheckError('承認済み動画の内容が変わったため停止しました。')
-    validate_bpm(item)
     # Claim is durable before creating or publishing a container. Never auto-retry an unknown POST.
     record={'status':'claimed','date':today}
     records[item['id']]=record

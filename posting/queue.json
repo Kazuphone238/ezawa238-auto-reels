@@ -62,5 +62,25 @@
     "visual_template": "approved_duet",
     "visual_verified": true,
     "scheduled_date": "2026-10-22"
+  },
+  {
+    "id": "dj-yokai-20261023",
+    "path": "posting/videos/dj-yokai-20261023.mp4",
+    "sha256": "b2613e0dc30ad1dda1609288dfbf2f5be3e6f82a68bf2005f1b963765ae1d183",
+    "caption": "EZAWA238 | 百鬼夜行 CLUB PARTY 🎧🔥\n自分をCG化して、妖怪たちと音楽を楽しむ15秒。\n#EZAWA238 #百鬼夜行 #DJ #AIVideo #Music",
+    "source_library_file_id": "libfile_166555e4e5548191b3e745cbc6040136",
+    "final_library_file_id": "libfile_214fa31048c48191b938f13ca755249a",
+    "audio_start_seconds": 0,
+    "duration_seconds": 15,
+    "visual_template": "approved_dj_yokai",
+    "visual_verified": true,
+    "scheduled_date": "2026-10-23",
+    "custom_approval": {
+      "sha256": "b2613e0dc30ad1dda1609288dfbf2f5be3e6f82a68bf2005f1b963765ae1d183",
+      "reason": "User explicitly requested this DJ/yokai video with rotation and frame-outs for Instagram, then supplied the music and asked to complete scheduling.",
+      "no_bpm_text_verified": true
+    },
+    "bpm_status": "unresolved; no BPM claim displayed or captioned",
+    "template_sha256": "9fa6da3081adab8168c00e2a043b0c9e9b6a00a25c6b9546a67a05066a30ff35"
   }
 ]

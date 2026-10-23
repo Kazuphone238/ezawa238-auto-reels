@@ -1,15 +1,39 @@
 # EZAWA238 Instagram content rules
 
-All uploaded songs are audio sources only. Use the approved two-statue dance video for both Reels and Stories unless the user explicitly requests another visual.
+## Current visual template — effective October 23, 2026
 
-Before adding an item to queue.json: combine the supplied audio with the approved_duet video; verify the full output decodes; inspect beginning, middle and end; confirm the supplied audio is present; record sha256, source_library_file_id, visual_template: approved_duet and visual_verified: true. Do not queue a raw song upload as the final visual.
+The user explicitly replaced the old two-statue video for ALL future posts.
+Use `assets/approved_dj_yokai.mp4`, identified by `posting/visual_template.json`,
+as the visual for both Reels and Stories. This is the approved 15-second
+DJ/yokai animation with rotation, zoom and frame-outs. Newly supplied files
+are audio sources unless the user expressly requests a visual change.
+Never select the retired two-statue video for a new post. Preserve historical
+published videos and state records; do not republish or delete them.
 
-The publisher rejects new queue items lacking the visual verification fields. A conversation acknowledgement does not register a queue item: registration is complete only when media and queue.json exist on main and have been read back. Existing published records must never be removed to resend a video. Upload ingestion and queue replenishment still require an execution step; they are not automatically triggered by a chat attachment.
+## Prepare and register each song
 
-## Per-track BPM (required from 2026-10-22)
+Combine the supplied music with the approved DJ visual; preserve the user's
+chosen audio segment. Verify full decoding, duration, audio presence, and
+beginning/middle/end images. Set `visual_template: approved_dj_yokai`,
+`visual_verified: true`, the template SHA-256, final SHA-256 and source IDs.
+Bind `custom_approval.sha256` to that exact final artifact and record the
+user's visual selection in `custom_approval.reason`.
 
-The approved template contains a burned-in `STONE GROOVE / 128 BPM` line. Replacing audio or changing a caption does NOT update that line. For each new song, measure the actual supplied audio, check beats across multiple sections, resolve half/double-tempo ambiguity, and record the method/result in `bpm_evidence`. Never infer BPM from a generation prompt or copy the preceding song's value. If unresolved, do not mark it verified.
+The DJ visual has no burned-in BPM label. Never copy 128 BPM or claim an
+unverified tempo. Record unresolved BPM honestly and leave BPM out of the
+video and caption. `custom_approval.no_bpm_text_verified: true` requires
+visual review and a caption without BPM. Do not use the old STONE GROOVE
+overlay renderer, which was calibrated for the retired statue template.
 
-After combining the song with the approved two-statue template, run `python track_bpm.py INPUT.mp4 OUTPUT.mp4 --bpm VERIFIED_VALUE --evidence 'measurement and beat-check details'`. This replaces the old title line with an opaque title strip, preserves audio without re-encoding, and keeps frame timing. Inspect beginning/middle/end and confirm audio, BPM display and full decode before registering the output. Copy the generated metadata into the queue item, set `bpm_overlay_verified: true` only after visual review, and use the new output path/hash. Preserve all existing visual verification fields. The caption must contain the same BPM.
+A chat acknowledgement is not a booking. Registration is complete only when
+the final media and queue entry exist on main and have been read back.
+The existing daily Reel job is scheduled at 17:30 Asia/Tokyo; Story follows
+the successful Reel. GitHub Actions start times can be delayed.
+Do not change successful or uncertain publication records to force a retry.
 
-The publisher requires `bpm`, `bpm_verified`, `bpm_evidence`, `bpm_overlay_verified`, and `bpm_video_sha256` matching the final `sha256` before claiming a new item. Reels and Stories share this verified final video. Already-published items are historical and must not be requeued. No BPM is automatically assumed correct by this renderer.
+## October 23 queued deliverable
+
+`dj-yokai-20261023`: the approved 15-second DJ animation with the first
+15 seconds of 1000000325.mp4 and a short ending fade. Intended for the
+October 23 Reel and Story. Remote registration remains pending until the
+media upload and commit have succeeded.
