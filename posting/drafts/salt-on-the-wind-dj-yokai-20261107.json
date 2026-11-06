@@ -1,0 +1,22 @@
+{
+  "status": "prepared_not_scheduled",
+  "scheduled_at": "2026-11-07T17:30:00+09:00",
+  "blocker": "MP4 not uploaded. Do not append to active queue until exact MP4 uploaded and SHA256 verified. Audio listening review pending.",
+  "queue_item": {
+    "id": "salt-on-the-wind-dj-yokai-20261107",
+    "path": "posting/videos/salt-on-the-wind-dj-yokai-20261107.mp4",
+    "sha256": "bef90424f55c1dcebe60b21fa8f5909ae6100c684538d0e974374003d3c000d3",
+    "caption": "EZAWA238 | Salt on the Wind 🌊🎧\n潮風に想いを重ねて。妖怪たちと音を楽しむ15秒。\n#EZAWA238 #Suno #DJ #百鬼夜行 #Music",
+    "visual_template": "approved_dj_yokai",
+    "visual_verified": true,
+    "scheduled_date": "2026-11-07",
+    "audio_start_seconds": 0,
+    "duration_seconds": 15,
+    "custom_approval": {
+      "sha256": "bef90424f55c1dcebe60b21fa8f5909ae6100c684538d0e974374003d3c000d3",
+      "reason": "User requested this supplied music for today's slot and explicitly selected the existing DJ/yokai video. Original approved video stream preserved; new audio uses source seconds 0-15.",
+      "no_bpm_text_verified": true
+    },
+    "bpm_status": "unresolved; no BPM claim displayed or captioned"
+  }
+}
