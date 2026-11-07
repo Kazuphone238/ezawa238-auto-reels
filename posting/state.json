@@ -92,7 +92,10 @@
       "status": "published",
       "date": "2026-11-07",
       "container_id": "18118303127031052",
-      "media_id": "17968536972197456"
+      "media_id": "17968536972197456",
+      "story": {
+        "status": "claimed"
+      }
     }
   },
   "last_post_date": "2026-11-07"
