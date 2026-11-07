@@ -1,0 +1,23 @@
+{
+  "status": "prepared",
+  "queue_item": {
+    "id": "dj-yokai-20261108",
+    "path": "posting/videos/dj-yokai-20261108.mp4",
+    "sha256": "9c6966de0f6a87da1fc800127ed88559586420416d762244ec9c0b5d655c8900",
+    "caption": "EZAWA238 | 妖怪 CLUB NIGHT 🎧🔥\n音に身を任せて、妖怪たちと踊る15秒。\n#EZAWA238 #DJ #百鬼夜行 #Music #Suno",
+    "visual_template": "approved_dj_yokai",
+    "visual_verified": true,
+    "scheduled_date": "2026-11-08",
+    "scheduled_time_jst": "17:30",
+    "audio_start_seconds": 20,
+    "duration_seconds": 15,
+    "source_library_file_id": "libfile_b08c7132853c8191923ae62d02130c73",
+    "final_library_file_id": "libfile_aff19ee8f224819199d73f1a71e81fd4",
+    "custom_approval": {
+      "sha256": "9c6966de0f6a87da1fc800127ed88559586420416d762244ec9c0b5d655c8900",
+      "reason": "User requested November 8 scheduling using source seconds 20-35 and explicitly authorized adding video/audio to the public GitHub repository. Existing approved DJ yokai video packets preserved.",
+      "no_bpm_text_verified": true
+    },
+    "bpm_status": "unresolved; no BPM claim displayed or captioned"
+  }
+}
