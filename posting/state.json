@@ -89,10 +89,11 @@
       }
     },
     "salt-on-the-wind-dj-yokai-20261107": {
-      "status": "publishing",
+      "status": "published",
       "date": "2026-11-07",
-      "container_id": "18118303127031052"
+      "container_id": "18118303127031052",
+      "media_id": "17968536972197456"
     }
   },
-  "last_post_date": "2026-10-23"
+  "last_post_date": "2026-11-07"
 }
