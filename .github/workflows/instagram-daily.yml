@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     env:
-      EZAWA238_PUBLISH_REQUEST_DATE: ''
-      EZAWA238_PUBLISH_REQUEST_ID: ''
+      EZAWA238_PUBLISH_REQUEST_DATE: '2026-11-07'
+      EZAWA238_PUBLISH_REQUEST_ID: 'salt-on-the-wind-dj-yokai-20261107'
       GH_TOKEN: ${{ github.token }}
       IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
       IG_USER_ID: ${{ secrets.IG_USER_ID }}
