@@ -1,7 +1,7 @@
 {
-  "status": "prepared_not_scheduled",
+  "status": "scheduled",
   "scheduled_at": "2026-11-07T17:30:00+09:00",
-  "blocker": "MP4 not uploaded. Do not append to active queue until exact MP4 uploaded and SHA256 verified. Audio listening review pending.",
+  "blocker": null,
   "queue_item": {
     "id": "salt-on-the-wind-dj-yokai-20261107",
     "path": "posting/videos/salt-on-the-wind-dj-yokai-20261107.mp4",
@@ -18,5 +18,6 @@
       "no_bpm_text_verified": true
     },
     "bpm_status": "unresolved; no BPM claim displayed or captioned"
-  }
+  },
+  "verification": "Exact MP4 SHA256 verified; original approved video packets preserved; audio listening review not performed."
 }
