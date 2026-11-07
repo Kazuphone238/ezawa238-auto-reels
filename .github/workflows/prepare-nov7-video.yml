@@ -22,6 +22,8 @@ jobs:
         run: |
           import base64, hashlib, json
           from pathlib import Path
+          import sys
+          sys.path.insert(0, str(Path.cwd()))
           from daily_instagram import validate_content
           manifest = json.loads(Path("posting/prepared/salt-on-the-wind-20261107.reconstruction.json").read_text())
           source = Path(manifest["source"]).read_bytes()
